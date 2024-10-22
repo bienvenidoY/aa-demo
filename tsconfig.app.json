@@ -28,6 +28,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "panda/*": [
+        "styled-system/*"
       ]
     }
   },

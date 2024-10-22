@@ -20,6 +20,7 @@ const pathResolve = (dir = ".", metaUrl = import.meta.url) => {
     // 在 build 目录内，返回当前文件路径
     return fileURLToPath(metaUrl);
   }
+  console.log(currentFileDir)
   // 不在 build 目录内，返回解析后的绝对路径
   return resolvedPath;
 };
@@ -27,6 +28,7 @@ const pathResolve = (dir = ".", metaUrl = import.meta.url) => {
 /** 设置别名 */
 const alias: Record<string, string> = {
   "@": pathResolve("./src"),
+  "panda": pathResolve("./styled-system"),
 };
 
 // https://vitejs.dev/config/
