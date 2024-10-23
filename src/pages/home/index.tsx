@@ -34,7 +34,9 @@ const HomePage: React.FC = () => {
             extra={<Link onClick={() => AuthorAddModalRef.current.show()}>添加</Link>}
           >
             <div>
-              <AuthorList />
+              <AuthorList change={(key) => {
+                console.log(key)
+              }} />
             </div>
           </Card>
         </Col>
