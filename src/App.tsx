@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import HomePage from '@/pages/home';
-import { css } from '/styled-system/css';
-
 
 const App: React.FC = () => {
     return (
       <>
-          <div className={css({ padding: '12px 24px' })} >
+          <div className={'px-4 py-3'} >
               <HomePage />
           </div>
       </>

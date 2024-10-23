@@ -29,9 +29,6 @@
       "@/*": [
         "src/*"
       ],
-      "panda/*": [
-        "styled-system/*"
-      ]
     }
   },
   "include": [
