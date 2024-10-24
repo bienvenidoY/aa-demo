@@ -4,3 +4,6 @@
 html, body {
     background: #f2f3f5;
 }
+.arco-form-item-symbol {
+    display: inline-block;
+}

@@ -1,57 +1,34 @@
-import React, {useState} from 'react'
-import { Form, Input, Message, Modal} from "@arco-design/web-react";
-const FormItem = Form.Item;
+import React, {useState, useImperativeHandle, forwardRef} from 'react'
+import { Form,  Message, Modal,} from "@arco-design/web-react";
+import Login from './components/Login'
+import Register from './components/Register'
 
 interface Props {
   showHistoryModal: () => void;
 }
 
-const LoginModal: React.FC = (props: Props) => {
+const LoginModal: React.FC = forwardRef((props: Props, ref) => {
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [form] = Form.useForm();
 
-  function onOk() {
-    form.validate().then((res) => {
-      setConfirmLoading(true);
-      setTimeout(() => {
-        Message.success('Success !');
-        setVisible(false);
-        setConfirmLoading(false);
-      }, 1500);
-    });
-  }
-  const formItemLayout = {
-    labelCol: {
-      span: 4,
-    },
-    wrapperCol: {
-      span: 20,
-    },
-  };
+  useImperativeHandle(ref, () => ({
+    show: () => setVisible(true)
+  }));
+  const [current, setCurrent] = useState(0)
+
   return (
     <Modal
-      title='登录'
+      title={current === 0 ? '登录' : '注册'}
       visible={visible}
-      onOk={onOk}
+      footer={null}
       confirmLoading={confirmLoading}
       onCancel={() => setVisible(false)}
     >
-      <Form
-        {...formItemLayout}
-        form={form}
-        labelCol={{
-          style: { flexBasis: 90 },
-        }}
-        wrapperCol={{
-          style: { flexBasis: 'calc(100% - 90px)' },
-        }}
-      >
-        <FormItem label='文章链接' field='url' rules={[{ required: true }]}>
-          <Input placeholder='' />
-        </FormItem>
-      </Form>
+      <div>
+        <Login change />
+        <Register />
+      </div>
     </Modal>
   )
-}
+})
 export default LoginModal;

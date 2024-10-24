@@ -1,4 +1,6 @@
-import React, {useState, useRef} from 'react'; // 引入 React
+import React, {useState, useRef, useEffect} from 'react'; // 引入 React
+import { useLocalStorageState } from 'ahooks';
+
 import {Grid, Card, Link,} from '@arco-design/web-react';
 
 import Header from './components/Header'
@@ -11,12 +13,29 @@ import LoginModal from "@/pages/home/components/LoginModal";
 const Row = Grid.Row;
 const Col = Grid.Col;
 
+const getLocal = () => {
+  localStorage.getItem('userInfo')
+}
+
 const HomePage: React.FC = () => {
   const HistoryDrawerRef = useRef(null)
   const AuthorAddModalRef = useRef(null)
+  const LoginModalRef = useRef(null)
+  const [isLogin, setLogin] = useLocalStorageState('user-info',{
+    defaultValue: {},
+  })
+
+  useEffect(() => {
+    // 确保 ref.current 存在，并且 isLogin 为 false
+    console.log(222, LoginModalRef.current, !isLogin)
+    if (LoginModalRef.current && !isLogin.id) {
+      console.log(1123123)
+      LoginModalRef.current.show();
+    }
+  }, [isLogin, LoginModalRef]);
   return (
     <>
-      <LoginModal />
+      <LoginModal ref={LoginModalRef}/>
       <AuthorAddModal ref={AuthorAddModalRef}/>
       <HistoryDrawer ref={HistoryDrawerRef}/>
 
