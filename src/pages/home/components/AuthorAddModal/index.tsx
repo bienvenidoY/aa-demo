@@ -58,7 +58,7 @@ const AuthorAddModal: React.FC = forwardRef((props: Props, ref) => {
         }}
       >
         <FormItem label='文章链接' field='url' rules={[{required: true}]}>
-          <Input placeholder=''/>
+          <Input placeholder='请输入 文章链接'/>
         </FormItem>
       </Form>
     </Modal>

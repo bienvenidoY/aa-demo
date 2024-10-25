@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Button, Card, Space, Table, Typography} from "@arco-design/web-react";
+import {useLocalStorageState} from "ahooks";
 
 interface Props {
   change: (item: any) => void;
@@ -63,13 +64,22 @@ const ArticleList: React.FC = (props: Props) => {
   ];
 
   const [selectedRowKeys, setSelectedRowKeys] = useState(['4']);
+
+  const [userInfo, setUserInfo] = useLocalStorageState('user-info',{
+    defaultValue: {},
+  })
+
+  useEffect(() => {
+
+  }, [userInfo])
+
   return (
     <div>
       <Table
         rowKey='id'
         columns={columns}
         data={data}
-        rowSelection={{
+        rowSelection={userInfo.id && {
           type: 'checkbox',
           selectedRowKeys,
           onChange: (selectedRowKeys, selectedRows) => {
@@ -92,9 +102,13 @@ const ArticleList: React.FC = (props: Props) => {
 
 
 const ArticleModule: React.FC = () => {
+  const [userInfo, setUserInfo] = useLocalStorageState('user-info',{
+    defaultValue: {},
+  })
   return (
     <Card
       title={
+        userInfo.id ?
         <Space>
           <Button size={'small'} type={'primary'} >
             一键洗稿
@@ -103,6 +117,7 @@ const ArticleModule: React.FC = () => {
             type='secondary'
             className={'text-[14px] font-[400]'}>已经选择0篇</Typography.Text>
         </Space>
+          : '推荐文章'
       }
     >
       <div>

@@ -21,18 +21,10 @@ const HomePage: React.FC = () => {
   const HistoryDrawerRef = useRef(null)
   const AuthorAddModalRef = useRef(null)
   const LoginModalRef = useRef(null)
-  const [isLogin, setLogin] = useLocalStorageState('user-info',{
+  const [userInfo, setUserInfo] = useLocalStorageState('user-info',{
     defaultValue: {},
   })
 
-  useEffect(() => {
-    // 确保 ref.current 存在，并且 isLogin 为 false
-    console.log(222, LoginModalRef.current, !isLogin)
-    if (LoginModalRef.current && !isLogin.id) {
-      console.log(1123123)
-      LoginModalRef.current.show();
-    }
-  }, [isLogin, LoginModalRef]);
   return (
     <>
       <LoginModal ref={LoginModalRef}/>
@@ -40,20 +32,27 @@ const HomePage: React.FC = () => {
       <HistoryDrawer ref={HistoryDrawerRef}/>
 
       <div className={'pb-3'}>
-        <Header showHistoryModal={
+        <Header
+          showHistoryModal={
           () => {
             HistoryDrawerRef.current.show()
           }
-        }/>
+        }
+        />
       </div>
       <Row gutter={24}>
         <Col span={8} >
           <Card
             title='公众号'
-            extra={<Link onClick={() => AuthorAddModalRef.current.show()}>添加</Link>}
+            extra={
+              userInfo.id &&
+              <Link onClick={() => AuthorAddModalRef.current.show()}>添加</Link>
+            }
           >
             <div>
-              <AuthorList change={(key) => {
+              <AuthorList
+                showLoginModal={() =>  LoginModalRef.current.show()}
+                change={(key) => {
                 console.log(key)
               }} />
             </div>
